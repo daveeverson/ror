@@ -1,0 +1,168 @@
+<html>
+    <title>Tribal Communications Tracking</title>
+    <head>
+        <link rel="SHORTCUT ICON" href="http://www.dnr.state.mn.us/favicon.ico" type="image/x-icon">
+
+		<style TYPE="text/css">
+            p { /*default p styles*/
+                font-size: 100%;
+				margin: 0px;
+            }
+
+            form { /*default form style*/
+                font-size: 100%;
+                margin: 0px;
+                line-height: 80%;
+            }
+
+            a:link { /*default anchors*/
+                font-weight: bold;
+                font-size: 100%;
+                text-decoration: none;
+                color: #544E4F;
+            }
+
+            a:visited {
+                font-weight: bold;
+                font-size: 100%;
+                text-decoration: none;
+                color: #726E6D;
+            }
+
+            a:hover {
+                font-weight: bold;
+                font-size: 100%;
+                text-decoration: underline;
+                color: #726E6D;
+            }
+        </style>
+
+        <%= stylesheet_link_tag    "application", :media => "all" %>
+        <%= javascript_include_tag "application" %>
+        <%= csrf_meta_tags %>
+
+    </head>
+    <body>
+        <div id="containerall">
+            <!-- main nav header -->
+            <div id="nav">
+              <span id="navicon"><a href="http://intranet.dnr.state.mn.us/"><%= image_tag 'homepage/logo.gif' %></a></span><span id="navtext">
+                <a href="http://intranet.dnr.state.mn.us/emp_toolkit/index.html">employee toolkit</a>
+                | <a href="http://intranet.dnr.state.mn.us/supmgr_toolkit/index.html">supervisor/manager toolkit</a>
+                | <a href="http://intranet.dnr.state.mn.us/forms/index.html">forms</a>
+                | <a href="http://intranet.dnr.state.mn.us/help_desk/index.html">help desk</a>
+                | <a href="http://intranet.dnr.state.mn.us/search/"><em>search</em></a>
+                <% if current_user %>
+                    | <a href="<%= url_for :controller=>'application', :action=>'logout' %>"><em>log out</em>&nbsp;</a>
+                <% end %>
+                </span>
+            </div>
+            <!-- end nav header --><!-- menu --><!-- menu -->
+            <div class="menuBar">
+                <a class="menuButton" href="http://intranet.dnr.state.mn.us/inside_dnr/index.html" onmouseover="buttonMouseover(event, 'insideMenu');">inside the dnr</a>
+                |<a class="menuButton" href="http://intranet.dnr.state.mn.us/laws_legislature/index.html" onmouseover="buttonMouseover(event, 'lawsMenu');">laws, rules, legislature</a>
+                |<a class="menuButton" href="http://intranet.dnr.state.mn.us/contacts/index.html" onmouseover="buttonMouseover(event, 'peopleMenu');">people &amp; contacts</a>
+                |<a class="menuButton" href="http://intranet.dnr.state.mn.us/policies/index.html" onmouseover="buttonMouseover(event, 'policiesMenu');">policies &amp; procedures</a>
+                |<a class="menuButton" href="http://intranet.dnr.state.mn.us/products_services/index.html" onmouseover="buttonMouseover(event, 'productsMenu');">products &amp; services</a>
+                |<a class="menuButton" href="http://intranet.dnr.state.mn.us/reference_room/index.html" onmouseover="buttonMouseover(event, 'refMenu');">reference room</a>
+            </div>
+            <div id="insideMenu" class="menu" onmouseover="menuMouseover(event)">
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/bureaus/index.html">Bureaus</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/hr/index.html">&nbsp; Human Resources</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/ie/index.html">&nbsp; Information &amp; Education</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/mr/index.html">&nbsp; Management Resources</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/omb/index.html">&nbsp; Office of Mgmt &amp; Budget
+                    Services</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/commissioner/index.html">Commissioner's office</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/inside_dnr/committees.html">Committees</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/divisions/index.html">Divisions</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/regions/index.html">Regions</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/omb/dept_planning/index.html">Strategic plans</a>
+            </div>
+            <div id="lawsMenu" class="menu" onmouseover="menuMouseover(event)">
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/laws_legislature/update/index.html">Legislative update</a>
+                <a class="menuItem" href="http://www.dnr.state.mn.us/aboutdnr/laws_treaties/index.html">Existing laws</a>
+            </div>
+            <div id="peopleMenu" class="menu" onmouseover="menuMouseover(event)">
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/contacts/index.html#directories">DNR directories</a>
+                <a class="menuItem" href="http://files-intranet.dnr.state.mn.us/user_files/1831/expertslist.pdf">DNR media contacts
+                    (pdf)</a>
+                <a class="menuItem" href="http://www.mail.state.mn.us/">Government employee white pages</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/ie/info_center/list.html">Info Center resource list</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/contacts/index.html#maps">Maps</a>
+            </div>
+            <div id="policiesMenu" class="menu" onmouseover="menuMouseover(event)">
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/admin_manual/index.html">Administrative manual</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/delegation_orders/index.html">Delegation orders</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/operational_orders/index.html">Operational orders</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/policies/index.html#other">Bureau &amp; Division
+                    policies</a>
+            </div>
+            <div id="productsMenu" class="menu" onmouseover="menuMouseover(event)">
+                <a class="menuItem" href="http://www.officesupplyconnection.org/statemn/catalog.srv">Office supplies</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/mr/mis/standards/computer_purchasing.html">Computers &amp;
+                    peripherals</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.usmr/mis/telecom/index.html	Delete this page">Telecom</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/mr/materials/uniforms.html">Uniforms</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/mr/fleet/index.html">Vehicles</a>
+                <br>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/creative_services/index.html">Creative services</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/mr/mis/developers.html">Database development</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/omb/facilitation.html">Facilitation</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/mr/mis/gis/humanres.html">GIS services</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/ie/newsroom/news_bureau.html">News bureau</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/omb/strategic_planning.html">Strategic planning</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/mr/mis/web.html">Web site development</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/products_services/index.html">more...</a>
+            </div>
+            <div id="refMenu" class="menu" onmouseover="menuMouseover(event)">
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/help_desk/">Help desk</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/library/index.html">Library</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/info_center/list.html">Info Center resource list</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/gis/index.html">GIS user group</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/photo_library/index.html">Photo library</a>
+                <a class="menuItem" href="http://files.dnr.state.mn.us/stats/">Web site statistics</a>
+                <a class="menuItem" href="http://intranet.dnr.state.mn.us/reference_room/index.html">more...</a>
+            </div>
+            <!-- end menu --><!--DNRnet header-->
+
+            <table width="925" height="600" border="0" cellpadding="0" cellspacing="0" align="center" class="palesbark">
+            <% if session[:user] %>
+                <tr valign="top">
+                    <td align="right" height=50>
+                    <!--
+                        <a href='https://<%="#{YAML.load(IO.read(Rails.root.join('config', 'openidconnect.yml')))['host']}"%>/users/applications'>
+                            My Applications
+                        </a>&nbsp;
+                        -->
+                    <%=link_to "Application main menu", :controller=>'contacts', :action=>'index', :class=>"lfnav" %>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <h1 class="nb">Tribal Contacts Tracking</h1>&nbsp;&nbsp;&nbsp;
+                        <br><h3 class="nb">Welcome <%= session[:user].first_name %> <%= session[:user].last_name %></h3>
+                        <h3 class="nb" style="color:red">
+                        <% for key in [:notice, :error, :message, :warning]  %><%= "<p class='#{key}'> #{flash[key]} </p>".html_safe if flash[key] %><% end %>
+                        </h3>
+                        <%if Rails.env.development?  %>
+                            <h3 style="color:red;">You are in Rails Development mode.</h3>
+                        <%end %>
+                        <%=yield%>
+                    </td>
+                </tr>
+            <% else %>
+                <%=yield%>
+            <% end %>
+                <tr>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr><td colspan="2"><h3>For Assistance Contact Annalee Garletz at (651)259-5541 | <a href="mailto:Annalee.Garletz@state.mn.us">Annalee.Garletz@state.mn.us</a></h3></td></tr>
+            </table>
+        </div>
+        <div id="debug"/>
+    </body>
+</html>

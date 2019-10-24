@@ -1,0 +1,48 @@
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h3>DNR Person Contacted</h3>
+      <h4 class="nb">First Name</h4> <%= f.text_field :staff_first_name, :size=>20 %>
+    </td>
+    <td valign="bottom">
+      <h4 class="nb">Last Name</h4> <%= f.text_field :staff_last_name, :size=>20 %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3 class="nb">My DNR Business Unit</h3><br>
+      <%= f.select :unit_id, ContactUnit.find(:all, :order=>"name").collect {|u| [u.name, u.id]}, {:include_blank=>true} %>     
+    </td>
+    <td>
+      <h3 class="nb">Topic</h3><br>
+      <%= f.text_field :topic, :size=>30 %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>Tribal Contact</h3>
+      <h4 class="nb">Tribe</h4> <%= f.select :tribal_entity_id, TribalEntity.find(:all, :order=>"name").collect {|t| [t.name, t.id]}, {:include_blank=>true}, :style => "width:340px" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h4 class="nb">First Name</h4> <%= f.text_field :tribal_contact_first_name, :size=>20 %>
+    </td>
+    <td valign="bottom">
+      <h4 class="nb">Last Name</h4> <%= f.text_field :tribal_contact_last_name, :size=>20 %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <h3 class="nb">Contact Date</h3>
+      <%= f.text_field :contact_date, :size=>15, value: sd(f.object.contact_date) %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <h3>Notes</h3>
+      <%= f.text_area(:notes, :class => 'ckeditor') %>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,49 @@
+<table>
+<tr><td> <h2><%= flash[:result] %></h2></td></tr>
+
+<% if true %>
+	<tr>
+		<td>
+			Download: <%= link_to("CSV", contact_export_contacts_path(search: @search, format: "csv"), method: :post) %>&nbsp;|
+			<%= link_to("Excel", contact_export_contacts_path(search: @search, format: "xls"), method: :post) %>
+	  </td>
+	</tr>
+<% end %>
+
+<tr><td></td></tr>
+<table cellpadding="5" border="0" style="border-collapse:collapse" >
+	<tr>
+		<th align="left"><h2>Topic</h2></th>
+		<th><h2>Tribe</h2></h2>
+		<th><h2>First Name</h2></h2>
+		<th><h2>Last Name</h2></h2>
+		<th><h2>Date</h2></th>
+	</tr>
+	<% @contacts.each_with_index do |r, index| %>
+	<tr class=<%= row_class(index) %>>
+		<td>
+			<%= r.topic %>
+		</td>
+		<td align="left">
+			<%= r.try(:tribal_entity).try(:name) %>
+		</td>
+		<td align="left">
+			<%= r.tribal_contact_first_name %>
+		</td>
+		<td align="left">
+			<%= r.tribal_contact_last_name %>
+		</td>
+		<td> 
+			<%= r.contact_date %>
+		</td>
+		<td>
+			<%= link_to "View", :action=>"show", :id=>r.id %>
+		</td>
+		<td>
+			<%#= link_to "Destroy", {:action=>"destroy", :id=>r.id} %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+</td></tr>
+</table>

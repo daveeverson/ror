@@ -1,0 +1,97 @@
+<table cellpadding="5" border="0">
+  <tr>
+    <td width="82%">
+      <p>The purpose of the tribal contact form is to better communicate internally on important or emerging tribal issues, questions, or concerns. Do not use this as a reporting tool for communicating confidential data ( e.g. information restricted by court decisions).
+      </p></br>
+      <p><b>Instructions:</b> 
+        Fill in the information and click on "Submit/Save" at the bottom of this form when completed. Please be sure to include brief but sufficient detail. Additional details are required when issues are potentially controversial or of statewide significance. In the event of such issues, please contact your supervisor as soon as possible, in addition to completing this report.
+      </p>
+
+      <%= form_for @contact, :html=>{:multipart=>true} do |f| %>
+        <%= render :partial=>"form", :locals=>{:f=>f} %>
+        <table width="100%">
+          <tr>
+            <td>
+              <%= submit_tag "Submit / Save" %>
+            </td>
+            <td><%#= submit_tag "Cancel", :method=>:put %></td>
+            <% if @contact.id != nil %>
+              <td>
+                <%= link_to "Destroy", {:action=>"destroy", :id=>@contact.id}, {:confirm=>"Are You Sure?"} %>
+              </td>
+            <% end %>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+    <td valign="top">
+      <% if true %>
+      <h3>Manage</h3>
+      <h3><%= link_to "DNR Business Units", :controller=>"contact_units", :action=>"index", :type=>'tribal' %></h3>
+      <% end %>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr width="100%"></td></tr>
+  <tr>
+    <td valign="top">
+    <%= form_tag contact_search_contacts_path , {:action=>:post, :remote=>true, :'data-update-target' => 'contacts_list'}  do  %>
+
+      <table width="100%">
+        <tr>
+          <% if true %>
+            <td colspan="4"><h2>Search Tribal Contacts</h2></td>
+          <% else %>
+            <td colspan="4"><h2>Search Your Tribal Contacts</h2></td>
+          <% end %>  
+        </tr>
+        <tr>
+          <td colspan="2"><h4>Topic / Notes</h4>
+          <%= text_field_tag "contact_search[topic]" %>
+          </td>
+          <td colspan="2"><h4>DNR Business Unit</h4>
+            <%= select_tag "contact_search[business_unit]", options_from_collection_for_select(ContactUnit.find(:all, :order=>"name"), 'id', 'name'), {:include_blank=>true} %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><h4>Tribe</h4>
+            <%= select_tag "contact_search[tribal_name]", options_from_collection_for_select(TribalEntity.find(:all, :order=>"id"), 'id', 'name'), {:include_blank=>true, :style => "width:350px"} %>
+          </td>
+        
+          <td>
+            <h4>From Date</h4>
+            <%= text_field_tag "contact_search[from_date]", '',:size=>12 %>            
+          </td>
+          <td>
+            <h4>To Date</h4>
+            <%= text_field_tag "contact_search[to_date]", '',:size=>12 %>            
+          </td>
+        </tr>     
+        <tr>
+          <td colspan="2"><h4>Tribal Contact Name</h4>First <%= text_field_tag "contact_search[tribal_contact_first_name]",'',:size=>10 %> &nbsp;Last <%= text_field_tag "contact_search[tribal_contact_last_name]",'', :size=>10 %></td>
+
+          <td colspan="2"><h4>Employee Name</h4>First <%= text_field_tag "contact_search[staff_first_name]",'', :size=>10 %> &nbsp;Last <%= text_field_tag "contact_search[staff_last_name]",'', :size=>10 %>
+          </td>
+          <td><%= submit_tag "Search" %></td>
+        </tr>
+      </table>
+    <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <% if true %>
+        <%= link_to "View Compiled Report", {:action=>"view_compiled_report"}, {:target=>"_blank"} %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div id="contacts_list">
+        <%= render :partial=>"contact_search", :locals=>{:contacts=>@contacts} %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<br />
+

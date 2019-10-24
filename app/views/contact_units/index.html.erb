@@ -1,0 +1,30 @@
+<br><br>
+<h2 class="nb">MNDNR Business Units</h2> &nbsp;<%= link_to "Create New", :action=>"new", :type=>params[:type] %>
+<table cellpadding="0" border="0">
+	<tr>
+		<%#= render :partial => "shared/navigation" %>
+		<td valign="top">
+			<% if @units.size > 0 %>
+			  <table>
+			  	<!--<tr bgcolor="#93a092">--><tr>
+			  		<td width="300">
+			  			<div id="uone" class="mheader">
+			  				<h1 class="nb">Units</h1>
+						</div>
+					</td>
+				</tr>
+				<% @units.each_with_index do |u, index| %>
+					<tr class=<%= row_class(index) %>>
+						<td><%= link_to u.name, :action => "edit", :id => u.id %></td>
+					</tr>
+				<% end %>
+			  </table>
+			<% else %>
+				<b>No Units Recorded Yet Recorded In System</b>
+			<% end %>			
+		</td>
+		<td valign="top">
+			
+		</td>
+	</tr>	
+</table>

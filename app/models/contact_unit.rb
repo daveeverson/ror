@@ -1,0 +1,9 @@
+class ContactUnit < ActiveRecord::Base
+	self.table_name = "tribal_contact_units"
+
+  has_many :contacts
+  attr_accessible :name, :abbr
+	# validates_presence_of :name
+	# validates_uniqueness_of :name
+
+end

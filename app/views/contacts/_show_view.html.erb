@@ -1,0 +1,48 @@
+<div id="mone" class="mheader" style="width:50em;">
+<table border="0">
+	<tr>
+		<td>
+			<h3>Topic</h3>
+			<%= @contact.topic %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3>Tribal Contact</h3>
+			<h4 class="nb">Tribe:</h4>&nbsp;&nbsp; <%= @contact.tribal_entity.name if @contact.tribal_entity %><br>
+			<h4 class="nb">First Name:</h4>&nbsp;&nbsp; <%= @contact.tribal_contact_first_name %><br>
+			<h4 class="nb">Last Name:</h4> &nbsp;&nbsp;<%= @contact.tribal_contact_last_name %>
+                </td>
+	</tr>
+	<tr>
+		<td>
+			<h3>DNR Person Contacted</h3>
+			<h4 class="nb">First Name:</h4> &nbsp;&nbsp;<%= @contact.staff_first_name %><br>
+			<h4 class="nb">Last Name:</h4> &nbsp;&nbsp;<%= @contact.staff_last_name %>
+		</td>
+		<td valign="bottom">
+			<h4 class="nb">Unit:</h4> &nbsp;&nbsp;<%= @contact.contact_unit.name if @contact.contact_unit %>			
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3 class="nb">Tribal Contact Date</h3>
+			<%= @contact.contact_date %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<h3>Notes</h3>
+			<%= @contact.notes.html_safe %>
+		</td>
+	</tr>
+</table>
+</div>
+<table width="100%">
+	<tr>
+    <% if current_user.can_edit?(@contact) %>
+    	<td><%= link_to "Edit Your Entry Here", :action=>"edit", :id=>@contact.id %></td>
+    <% end %>
+		<td><%= link_to "Return To Index", contacts_path %></td>
+	</tr>
+</table>

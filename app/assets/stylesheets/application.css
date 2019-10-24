@@ -1,0 +1,41 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require jquery-ui
+ *= require_tree . 
+*/
+
+.darkg {
+    color: #323F3A;
+}
+
+.mheader {
+    background-color: #A2BC9D;
+    background-size: auto auto;
+    padding: 5px;
+}
+
+.nb {
+	display:inline;
+	}
+
+.rowodd {
+		background-color: #BED6BD;
+	}
+
+.roweven {
+		background-color: #FFFFFF;
+	}
+
+body, p, ol, ul, td, th {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+h4 {
+	font-size: 8pt;
+	margin: 0px 0 0 0;
+	}

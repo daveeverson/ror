@@ -1,0 +1,6 @@
+<h1>Record New Unit</h1>
+<%= form_for @unit do |f| %>
+<%= render :partial => "shared/create_form", :locals => { :f => f } %>
+<% end %>
+<br><br>
+<p align="center"><%= link_to "Units Index", :action=>"index", :type=>params[:type] %></p>

@@ -1,0 +1,20 @@
+<br>
+<h1 class="nb">Tribal Contact Summary</h1>
+<br>
+<b><%= pluralize(@contacts.size, 'New Contact') %> Since 3:30pm <%= Time.now.yesterday.strftime('%m/%d/%y') %></b> 
+<br>
+<hr>
+<table>
+<% @contacts.each do |mc| %>
+<tr><td style="width:12em;"><b>Topic:</b></td><td><%= mc.topic %></td></tr>
+<tr><td><b>Tribe:</b></td><td><%= mc.try(:tribal_entity).try(:name) %></tr>
+<tr><td><b>Tribal Contact:</b></td><td><%= mc.tribal_contact_first_name %>  <%= mc.tribal_contact_last_name %></tr>
+<tr><td><b>DNR Person Contacted:</b></td><td><%= mc.staff_first_name %> <%= mc.staff_last_name %></tr>
+<tr><td><b>Contact Date:</b></td><td><%= mc.contact_date %></tr>
+<tr><td><b>Notes:</b></td><td><%= mc.notes.html_safe %></tr>
+<tr><td><b>Reported At:</b></td><td><%= mc.created_at.strftime("%I:%M %p") %>  <%= mc.created_at.strftime('%m/%d/%y') %></td></tr>
+<tr><td colspan="2"><hr></td></tr>
+<% end %>
+</table>
+
+

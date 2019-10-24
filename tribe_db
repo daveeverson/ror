@@ -1,0 +1,1225 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.1
+-- Dumped by pg_dump version 9.5.1
+
+-- Started on 2019-10-23 07:13:35 CDT
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE test2;
+--
+-- TOC entry 2565 (class 1262 OID 35024)
+-- Name: test2; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE test2 WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'C' LC_CTYPE = 'C';
+
+
+ALTER DATABASE test2 OWNER TO postgres;
+
+\connect test2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 6 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- TOC entry 2566 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+--
+-- TOC entry 1 (class 3079 OID 12623)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2568 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 182 (class 1259 OID 35027)
+-- Name: daily_contacts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE daily_contacts (
+    id integer NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
+    email character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    active_flag boolean DEFAULT true,
+    media_flag boolean,
+    request_flag boolean
+);
+
+
+ALTER TABLE daily_contacts OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 35025)
+-- Name: daily_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE daily_contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE daily_contacts_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2569 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: daily_contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE daily_contacts_id_seq OWNED BY daily_contacts.id;
+
+
+--
+-- TOC entry 184 (class 1259 OID 35039)
+-- Name: employees; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE employees (
+    id integer NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
+    work_phone character varying(255),
+    email_addr character varying(255),
+    unit_name character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    username character varying(255),
+    seid character varying(255)
+);
+
+
+ALTER TABLE employees OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 35037)
+-- Name: employees_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE employees_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employees_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2570 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: employees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE employees_id_seq OWNED BY employees.id;
+
+
+--
+-- TOC entry 185 (class 1259 OID 35048)
+-- Name: geometry_columns; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE geometry_columns (
+    f_table_catalog character varying(256) NOT NULL,
+    f_table_schema character varying(256) NOT NULL,
+    f_table_name character varying(256) NOT NULL,
+    f_geometry_column character varying(256) NOT NULL,
+    coord_dimension integer NOT NULL,
+    srid integer NOT NULL,
+    type character varying(30) NOT NULL
+);
+
+
+ALTER TABLE geometry_columns OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 35056)
+-- Name: legislative_contact_units; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE legislative_contact_units (
+    id integer NOT NULL,
+    name character varying(255),
+    abbr character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE legislative_contact_units OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 35054)
+-- Name: legislative_contact_units_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE legislative_contact_units_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE legislative_contact_units_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2571 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: legislative_contact_units_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE legislative_contact_units_id_seq OWNED BY legislative_contact_units.id;
+
+
+--
+-- TOC entry 189 (class 1259 OID 35067)
+-- Name: legislative_contacts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE legislative_contacts (
+    id integer NOT NULL,
+    author_id integer,
+    topic character varying(255),
+    tribal_contact_first_name character varying(255),
+    tribal_contact_last_name character varying(255),
+    tribal_contact_phone_nbr character varying(255),
+    staff_first_name character varying(255),
+    staff_last_name character varying(255),
+    staff_email character varying(255),
+    contact_date date,
+    notes character varying(10000),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    submitted_flag boolean DEFAULT false,
+    unit_id integer,
+    tribal_name character varying(255)
+);
+
+
+ALTER TABLE legislative_contacts OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 35065)
+-- Name: legislative_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE legislative_contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE legislative_contacts_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2572 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: legislative_contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE legislative_contacts_id_seq OWNED BY legislative_contacts.id;
+
+
+--
+-- TOC entry 191 (class 1259 OID 35079)
+-- Name: media_contact_attachments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE media_contact_attachments (
+    id integer NOT NULL,
+    media_contact_id integer,
+    attachment_file_name character varying(255),
+    attachment_content_type character varying(255),
+    attachment_file_size integer,
+    attachment_type character varying(255)
+);
+
+
+ALTER TABLE media_contact_attachments OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 35077)
+-- Name: media_contact_attachments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE media_contact_attachments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_contact_attachments_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2573 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: media_contact_attachments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE media_contact_attachments_id_seq OWNED BY media_contact_attachments.id;
+
+
+--
+-- TOC entry 193 (class 1259 OID 35090)
+-- Name: media_contact_units; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE media_contact_units (
+    id integer NOT NULL,
+    name character varying(255),
+    abbr character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE media_contact_units OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 35088)
+-- Name: media_contact_units_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE media_contact_units_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_contact_units_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2574 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: media_contact_units_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE media_contact_units_id_seq OWNED BY media_contact_units.id;
+
+
+--
+-- TOC entry 195 (class 1259 OID 35101)
+-- Name: media_contacts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE media_contacts (
+    id integer NOT NULL,
+    author_id integer,
+    topic character varying(255),
+    media_outlet character varying(255),
+    reporter_first_name character varying(255),
+    reporter_last_name character varying(255),
+    reporter_phone_nbr character varying(255),
+    staff_first_name character varying(255),
+    staff_last_name character varying(255),
+    staff_email character varying(255),
+    contact_date date,
+    notes character varying(10000),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    submitted_flag boolean DEFAULT false,
+    unit_id integer,
+    outlet_type_id integer,
+    publication_date date
+);
+
+
+ALTER TABLE media_contacts OWNER TO postgres;
+
+--
+-- TOC entry 194 (class 1259 OID 35099)
+-- Name: media_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE media_contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_contacts_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2575 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: media_contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE media_contacts_id_seq OWNED BY media_contacts.id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 35113)
+-- Name: outlet_types; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE outlet_types (
+    id integer NOT NULL,
+    name character varying(255),
+    abbr character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE outlet_types OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 35111)
+-- Name: outlet_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE outlet_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE outlet_types_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2576 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: outlet_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE outlet_types_id_seq OWNED BY outlet_types.id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 35124)
+-- Name: outlets; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE outlets (
+    id integer NOT NULL,
+    name character varying(255),
+    abbr character varying(255),
+    outlet_type_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE outlets OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 35122)
+-- Name: outlets_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE outlets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE outlets_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2577 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: outlets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE outlets_id_seq OWNED BY outlets.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 35135)
+-- Name: permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE permissions (
+    id integer NOT NULL,
+    employee_id integer,
+    request_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE permissions OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 35133)
+-- Name: permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2578 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE permissions_id_seq OWNED BY permissions.id;
+
+
+--
+-- TOC entry 203 (class 1259 OID 35143)
+-- Name: request_attachments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE request_attachments (
+    id integer NOT NULL,
+    request_id integer,
+    attachment_file_name character varying(255),
+    attachment_content_type character varying(255),
+    attachment_file_size integer,
+    attachment_type character varying(255)
+);
+
+
+ALTER TABLE request_attachments OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 35141)
+-- Name: request_attachments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE request_attachments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE request_attachments_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2579 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: request_attachments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE request_attachments_id_seq OWNED BY request_attachments.id;
+
+
+--
+-- TOC entry 205 (class 1259 OID 35154)
+-- Name: request_types; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE request_types (
+    id integer NOT NULL,
+    name character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE request_types OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 35152)
+-- Name: request_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE request_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE request_types_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2580 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: request_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE request_types_id_seq OWNED BY request_types.id;
+
+
+--
+-- TOC entry 207 (class 1259 OID 35162)
+-- Name: requests; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE requests (
+    id integer NOT NULL,
+    author_id integer,
+    description character varying(2000),
+    request_date date,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    request_type_id integer,
+    public_data character varying(255),
+    unit_contacted boolean,
+    status character varying(255),
+    copy_fee_amt numeric(10,2),
+    documents_attached character varying(255),
+    status_date date,
+    statute character varying(255),
+    unit_designee_id integer,
+    response_lead character varying(255),
+    submitted_flag boolean DEFAULT false,
+    requestor_first_name character varying(255),
+    requestor_last_name character varying(255),
+    requestor_org character varying(255),
+    requestor_phone character varying(255),
+    requestor_email character varying(255),
+    topic character varying(255),
+    last_editor_id integer,
+    response character varying(2000)
+);
+
+
+ALTER TABLE requests OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 35160)
+-- Name: requests_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE requests_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2581 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE requests_id_seq OWNED BY requests.id;
+
+
+--
+-- TOC entry 208 (class 1259 OID 35172)
+-- Name: requests_units; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE requests_units (
+    request_id integer,
+    unit_id integer
+);
+
+
+ALTER TABLE requests_units OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 35217)
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE schema_migrations (
+    version character varying(255) NOT NULL
+);
+
+
+ALTER TABLE schema_migrations OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 35175)
+-- Name: spatial_ref_sys; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE spatial_ref_sys (
+    srid integer NOT NULL,
+    auth_name character varying(256),
+    auth_srid integer,
+    srtext character varying(2048),
+    proj4text character varying(2048)
+);
+
+
+ALTER TABLE spatial_ref_sys OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 35183)
+-- Name: topics; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE topics (
+    id integer NOT NULL,
+    name character varying(255),
+    abbr character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE topics OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 35181)
+-- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE topics_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2582 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE topics_id_seq OWNED BY topics.id;
+
+
+--
+-- TOC entry 212 (class 1259 OID 35192)
+-- Name: topics_units; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE topics_units (
+    topic_id integer,
+    unit_id integer
+);
+
+
+ALTER TABLE topics_units OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 35228)
+-- Name: tribal_contact_units; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tribal_contact_units (
+    name character varying(100),
+    abbr character varying(100)
+);
+
+
+ALTER TABLE tribal_contact_units OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 35222)
+-- Name: tribal_contacts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tribal_contacts (
+    topic character varying(100),
+    tribal_contact_first_name character varying(100),
+    tribal_contact_last_name character varying(100),
+    staff_first_name character varying(100),
+    staff_last_name character varying(100),
+    contact_date date,
+    unit_id integer,
+    tribal_entity_id integer,
+    author_id integer,
+    created_at time without time zone,
+    notes text
+);
+
+
+ALTER TABLE tribal_contacts OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 35231)
+-- Name: tribal_entities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tribal_entities (
+    name character varying(100),
+    id integer NOT NULL
+);
+
+
+ALTER TABLE tribal_entities OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 35234)
+-- Name: tribal_entity; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tribal_entity (
+    id integer NOT NULL
+);
+
+
+ALTER TABLE tribal_entity OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 35197)
+-- Name: unit_designees; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE unit_designees (
+    id integer NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
+    unit_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    active_flag boolean
+);
+
+
+ALTER TABLE unit_designees OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 35195)
+-- Name: unit_designees_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE unit_designees_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE unit_designees_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2583 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: unit_designees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE unit_designees_id_seq OWNED BY unit_designees.id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 35208)
+-- Name: units; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE units (
+    id integer NOT NULL,
+    name character varying(255),
+    abbr character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE units OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 35206)
+-- Name: units_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE units_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE units_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2584 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: units_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE units_id_seq OWNED BY units.id;
+
+
+--
+-- TOC entry 2390 (class 2604 OID 35030)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY daily_contacts ALTER COLUMN id SET DEFAULT nextval('daily_contacts_id_seq'::regclass);
+
+
+--
+-- TOC entry 2392 (class 2604 OID 35042)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY employees ALTER COLUMN id SET DEFAULT nextval('employees_id_seq'::regclass);
+
+
+--
+-- TOC entry 2393 (class 2604 OID 35059)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY legislative_contact_units ALTER COLUMN id SET DEFAULT nextval('legislative_contact_units_id_seq'::regclass);
+
+
+--
+-- TOC entry 2394 (class 2604 OID 35070)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY legislative_contacts ALTER COLUMN id SET DEFAULT nextval('legislative_contacts_id_seq'::regclass);
+
+
+--
+-- TOC entry 2396 (class 2604 OID 35082)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY media_contact_attachments ALTER COLUMN id SET DEFAULT nextval('media_contact_attachments_id_seq'::regclass);
+
+
+--
+-- TOC entry 2397 (class 2604 OID 35093)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY media_contact_units ALTER COLUMN id SET DEFAULT nextval('media_contact_units_id_seq'::regclass);
+
+
+--
+-- TOC entry 2398 (class 2604 OID 35104)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY media_contacts ALTER COLUMN id SET DEFAULT nextval('media_contacts_id_seq'::regclass);
+
+
+--
+-- TOC entry 2400 (class 2604 OID 35116)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY outlet_types ALTER COLUMN id SET DEFAULT nextval('outlet_types_id_seq'::regclass);
+
+
+--
+-- TOC entry 2401 (class 2604 OID 35127)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY outlets ALTER COLUMN id SET DEFAULT nextval('outlets_id_seq'::regclass);
+
+
+--
+-- TOC entry 2402 (class 2604 OID 35138)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY permissions ALTER COLUMN id SET DEFAULT nextval('permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 2403 (class 2604 OID 35146)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request_attachments ALTER COLUMN id SET DEFAULT nextval('request_attachments_id_seq'::regclass);
+
+
+--
+-- TOC entry 2404 (class 2604 OID 35157)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request_types ALTER COLUMN id SET DEFAULT nextval('request_types_id_seq'::regclass);
+
+
+--
+-- TOC entry 2405 (class 2604 OID 35165)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('requests_id_seq'::regclass);
+
+
+--
+-- TOC entry 2407 (class 2604 OID 35186)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY topics ALTER COLUMN id SET DEFAULT nextval('topics_id_seq'::regclass);
+
+
+--
+-- TOC entry 2408 (class 2604 OID 35200)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY unit_designees ALTER COLUMN id SET DEFAULT nextval('unit_designees_id_seq'::regclass);
+
+
+--
+-- TOC entry 2409 (class 2604 OID 35211)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY units ALTER COLUMN id SET DEFAULT nextval('units_id_seq'::regclass);
+
+
+--
+-- TOC entry 2411 (class 2606 OID 35036)
+-- Name: daily_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY daily_contacts
+    ADD CONSTRAINT daily_contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2413 (class 2606 OID 35047)
+-- Name: employees_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2415 (class 2606 OID 35064)
+-- Name: legislative_contact_units_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY legislative_contact_units
+    ADD CONSTRAINT legislative_contact_units_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2417 (class 2606 OID 35076)
+-- Name: legislative_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY legislative_contacts
+    ADD CONSTRAINT legislative_contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2419 (class 2606 OID 35087)
+-- Name: media_contact_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY media_contact_attachments
+    ADD CONSTRAINT media_contact_attachments_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2421 (class 2606 OID 35098)
+-- Name: media_contact_units_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY media_contact_units
+    ADD CONSTRAINT media_contact_units_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2423 (class 2606 OID 35110)
+-- Name: media_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY media_contacts
+    ADD CONSTRAINT media_contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2425 (class 2606 OID 35121)
+-- Name: outlet_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY outlet_types
+    ADD CONSTRAINT outlet_types_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2427 (class 2606 OID 35132)
+-- Name: outlets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY outlets
+    ADD CONSTRAINT outlets_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2429 (class 2606 OID 35140)
+-- Name: permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY permissions
+    ADD CONSTRAINT permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2446 (class 2606 OID 35238)
+-- Name: pk1; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tribal_entity
+    ADD CONSTRAINT pk1 PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2431 (class 2606 OID 35151)
+-- Name: request_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request_attachments
+    ADD CONSTRAINT request_attachments_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2433 (class 2606 OID 35159)
+-- Name: request_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request_types
+    ADD CONSTRAINT request_types_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2435 (class 2606 OID 35171)
+-- Name: requests_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requests
+    ADD CONSTRAINT requests_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2437 (class 2606 OID 35191)
+-- Name: topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY topics
+    ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2444 (class 2606 OID 35240)
+-- Name: tribal_entities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tribal_entities
+    ADD CONSTRAINT tribal_entities_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2439 (class 2606 OID 35205)
+-- Name: unit_designees_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY unit_designees
+    ADD CONSTRAINT unit_designees_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2441 (class 2606 OID 35216)
+-- Name: units_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY units
+    ADD CONSTRAINT units_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2442 (class 1259 OID 35220)
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- TOC entry 2567 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2019-10-23 07:13:35 CDT
+
+--
+-- PostgreSQL database dump complete
+--
+

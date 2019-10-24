@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Tribe</Data></Cell>
+        <Cell><Data ss:Type="String">Topic</Data></Cell>
+        <Cell><Data ss:Type="String">Tribal Contact First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Tribal Contact Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Business Unit</Data></Cell>
+        <Cell><Data ss:Type="String">Staff First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Staff Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Contact Date</Data></Cell>
+        <Cell><Data ss:Type="String">Notes</Data></Cell>
+      </Row>
+    <% @contacts.each do |c| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= c.tribal_entity.name unless c.tribal_entity.blank? %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.topic %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.tribal_contact_first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.tribal_contact_last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.contact_unit.name unless c.contact_unit.blank? %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.staff_first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.staff_last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.contact_date %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= CGI::unescapeHTML(c.notes.gsub(/(<[^>]*>)|\n|\r|&nbsp;|\t\/s/) {" "}) %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

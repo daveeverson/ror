@@ -1,0 +1,22 @@
+<%= yield :page_styling %>
+
+<p><b>Instructions:</b> 
+Fill in the form below and click on "submit contact" at the bottom of this form. 
+You do not need to report media calls seeking basic information, such as current state park fees or fishing opener dates. 
+If in doubt, file the report.</p>
+<p><hr></p>
+<%= form_for @contact, :url=>{:controller=>"contacts", :action=>"update", :id=>@contact.id},
+  :html=>{:multipart=>true} do |f| %>
+<div id="mone" class="mheader" style="width:50em;">
+	<%= render :partial=>"form", :locals=>{:f=>f} %>
+</div>
+<table width="600px" >
+	<tr>
+		<td><%= f.submit "Submit / Save" %></td>
+		<td align="center"><%= link_to "Tribal Contacts Home", contacts_path %></td>
+		<% if @contact.id != nil %>
+		<td align="right"><%= link_to "Destroy", { :action=>"destroy", :id=>@contact.id}, {:method=>:delete, :confirm=>"Are You Sure?"} %></td>
+		<% end %>
+	</tr>
+</table>
+<% end %>

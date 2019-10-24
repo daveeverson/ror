@@ -1,0 +1,57 @@
+<% content_for :page_scripts do %>
+	
+	<style type="text/css">
+		div#one{
+			background-image:url(images/gradient3_stretch.png) ; 
+			background-size:auto;
+			background-repeat:no-repeat 100% 100%;
+			padding:5px;
+			}		
+	</style>
+	
+<% end %>
+
+<%= yield :page_scripts %>
+
+<td rowspan="3" valign="top" height="200px" width="200px">
+		<div id="one">
+			<h1 class="darkg nb">Options</h1>
+			<% if request.parameters['controller'] == "media_contacts" %>
+				<h3><%= link_to "New Media Contact", :action=>"new", :emp_id=>@employee.id %></h3>
+			<% elsif request.parameters['controller'] == "requests" %>
+				<h3><%= link_to "New Data Practices Request", :action=>"new", :emp_id => @employee.id %></h3>
+				<h3><%= link_to_remote "Your Data<br>Practices Requests", :url=>{:action=>"get_yours", :emp_id=>@employee.id} %></h3>
+				<h3><%= link_to_remote "10 Most Recent Data<br>Practices Requests", :url=>{:action=>"get_most_recent", :emp_id=>@employee.id} %></h3>
+				<h3><%= link_to_remote "View All Data<br>Practices Requests", :url=>{:action=>"get_all", :emp_id=>@employee.id} %></h3>
+			<% else %>
+                          <% if params[:type] %>
+                               <% if params[:type] == 'media' %>
+                                <h3><%= link_to "Create New", :action=>"new", :type=>"media" %></h3> 
+                               <% else %>
+                                <h3><%= link_to "Create New", :action=>"new", :type=>"request" %></h3>
+                               <% end %>
+                          <% else %>
+                             <h3><%= link_to "Create New", :action=>"new" %></h3>
+                          <% end %>
+                        <% end %>
+                    <% if current_user.admin?  %>
+			<h1 class="darkg nb">Administration</h1>			
+                        <% if request.parameters['controller'] == "media_contacts" %>
+            		<h3><%= link_to "DNR Business Units", :controller=>"contact_units", :action=>"index", :type=>'media' %></h3>
+                        <% elsif request.parameters['controller'] == "requests" %>
+                        <h3><%= link_to "DNR Units", :controller=>"units", :action=>"index", :type=>'request' %></h3>
+                        <% else %>
+                          <%# nada %>
+                        <% end %>
+			<% if ["requests","unit_designees","daily_contacts"].include?(request.parameters['controller']) %>
+			   <h3><%= link_to "Unit Designees", unit_designees_path %></h3>
+		           <h3><%= link_to "Daily Report<br>Recipients", :controller=>"daily_contacts", :action=>"index", :type=>'request' %></h3>
+                           <h3><%= link_to "Data Practices Requests", requests_path %></h3>
+			<% end %>			
+                        <% if ["media_contacts","topics","outlets","outlet_types"].include?(request.parameters['controller']) %>
+                           <h3><%= link_to "Media Outlet Types", :controller=>"outlet_types", :action=>"index" %></h3>
+                           <h3><%= link_to "Daily Report Recipients", :controller=>"daily_contacts", :action=>"index", :type=>'media' %></h3>
+                        <% end %>
+                    <% end  %>
+		</div>
+</td>

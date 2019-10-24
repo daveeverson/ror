@@ -1,0 +1,6 @@
+<h1>Editing Unit Data: <%= @unit.name %></h1>
+<%= form_for @unit do |f| %>
+<%= render :partial => "shared/edit_form", :locals => { :f => f } %>
+<% end %>
+<br><br>
+<%= link_to "Units Index", :action=>"index", :type=>params[:type] %>

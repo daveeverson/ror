@@ -1,0 +1,17 @@
+# config/openidconnect.yml.example
+# The two environments are accounts-dev.dnr.state.mn.us or accounts.dnr.state.mn.us
+host: accounts-dev.dnr.state.mn.us
+
+# This needs to match the local environment eg (localhost, your local ip, or
+# webapps15-dev.dnr.state.mn, etc.) and it must be added to Callback URLs on
+# the application in the relevant extranet env (accounts-dev or accounts)
+# 'extranet' is the name set in config/initializers/openideconnect.rb
+redirect_uri: http://localhost:3000/auth/extranet/callback
+
+# Get client_id from the application show page on the relevant extranet env
+# (accounts-dev or accounts)
+client_id: 
+
+# Get secret from the application show page on the relevant extranet env
+# (accounts-dev or accounts)
+secret: 
