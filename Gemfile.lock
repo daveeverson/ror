@@ -33,7 +33,7 @@ GEM
     aes_key_wrap (1.0.1)
     arel (3.0.3)
     attr_required (1.0.1)
-    bindata (2.4.4)
+    bindata (2.4.10)
     builder (3.0.4)
     chronic (0.10.2)
     ckeditor_rails (4.10.0)
