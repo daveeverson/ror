@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.22.5'
+gem 'rails', '7.0.3.1'
 
 gem 'pg', '~> 0.20.0'
 
@@ -23,7 +23,7 @@ end
 
 # gem 'omniauth_openid_connect', '~> 0.2.4'
 
-gem 'jquery-rails', '~> 3.1'
+gem 'jquery-rails', '~> 4.5'
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'ckeditor_rails', '~> 4.6'
 gem 'net-ldap', '~> 0.16'
